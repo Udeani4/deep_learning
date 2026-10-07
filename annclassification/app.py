@@ -1,23 +1,43 @@
 import streamlit as st
+import os
 import numpy as np
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler,LabelEncoder,OneHotEncoder
 import pandas as pd
 import pickle
 
+# ## Load the trained model
+# model=tf.keras.models.load_model("model.keras")
+
+# ## load the encoder and scaler
+# with open('label_encoder_gender.pkl','rb') as file:
+#     label_encoder_gender=pickle.load(file)
+
+# with open('onehot_encoder_geo.pkl','rb') as file:
+#     onehot_encoder_geo=pickle.load(file)
+
+# with open('scaler.pkl','rb') as file:
+#     scaler=pickle.load(file)
+
+
 ## Load the trained model
-model=tf.keras.models.load_model("model.keras")
+model_path = os.path.join(os.path.dirname(__file__), "model.keras")
+model = tf.keras.models.load_model(model_path)
 
-## load the encoder and scaler
-with open('label_encoder_gender.pkl','rb') as file:
-    label_encoder_gender=pickle.load(file)
+## Load the encoder and scaler
+encoder_path = os.path.join(os.path.dirname(__file__), "label_encoder_gender.pkl")
+with open(encoder_path, "rb") as file:
+    label_encoder_gender = pickle.load(file)
 
-with open('onehot_encoder_geo.pkl','rb') as file:
-    onehot_encoder_geo=pickle.load(file)
+encoder_path_geo = os.path.join(os.path.dirname(__file__), "onehot_encoder_geo.pkl")
+with open(encoder_path_geo, "rb") as file:
+    onehot_encoder_geo = pickle.load(file)
 
-with open('scaler.pkl','rb') as file:
-    scaler=pickle.load(file)
 
+
+scaler_path = os.path.join(os.path.dirname(__file__), "scaler.pkl")
+with open(scaler_path, "rb") as file:
+    scaler = pickle.load(file)
 
 ## Streamlit app
 st.title("Customer Churn Prediction")
